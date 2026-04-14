@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📁</text></svg>">
+    <title>轻量文件服务器 - file sharing</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <!-- 任务列表按钮 -->
+    <div class="task-list-btn" id="taskListBtn">
+        <span class="icon-upload"></span>
+        <span class="task-count" id="taskCount">0</span>
+    </div>
+
+    <!-- 任务列表弹窗 -->
+    <div class="task-list-modal" id="taskListModal">
+        <div class="task-list-header">
+            <h3>上传任务</h3>
+            <button class="close-btn" id="closeTaskModal">&times;</button>
+        </div>
+        <div class="task-list-content" id="taskListContent">
+            <div class="no-tasks">暂无上传任务</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h1><span class="icon-folder"></span> 目录列表: {{displaypath}}</h1>
+            </div>
+            <div class="card-body">
+                <div class="upload-section">
+                    <form id="uploadForm" enctype="multipart/form-data">
+                        <div class="file-input-wrapper">
+                            <div class="file-input-group">
+                                <input type="file" name="file" id="fileInput" multiple />
+                                <label for="fileInput" class="btn btn-upload">
+                                    <span class="icon-upload"></span> 选择文件
+                                </label>
+                            </div>
+                            <span id="fileCount">未选择文件</span>
+                        </div>
+                        <div id="uploadPathInfo" class="upload-path-info"></div>
+                        <button type="submit" class="btn btn-primary btn-lg" id="uploadBtn" disabled>
+                            <span class="icon-upload"></span> 开始上传
+                        </button>
+                    </form>
+                </div>
+
+                <div class="file-list-wrapper">
+                    <table class="file-list">
+                        <thead>
+                            <tr>
+                                <th style="width: 40px;"></th>
+                                <th>名称</th>
+                                <th style="width: 120px;">大小</th>
+                                <th style="width: 200px;">日期</th>
+                                <th style="width: 140px;">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{file_rows}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer">
+                <span class="footer-text">由 Antigravity AI 构建开发</span>
+            </div>
+        </div>
+    </div>
+    <script src="/static/js/script.js"></script>
+</body>
+
+</html>

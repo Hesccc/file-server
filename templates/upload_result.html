@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>上传结果</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h1>上传结果</h1>
+            </div>
+            <div class="card-body">
+                <div class="alert {{alert_class}}">
+                    <span class="icon">{{icon}}</span>
+                    <strong>{{title}}</strong>
+                </div>
+                <p>{{message}}</p>
+            </div>
+            <div class="card-footer">
+                <a href="{{back_url}}" class="btn btn-primary">← 返回</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

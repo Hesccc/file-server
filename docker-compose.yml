@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  fileserver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: hescc/file-server:latest
+    container_name: fileserver
+    restart: unless-stopped
+    ports:
+      - "${PORT:-8000}:8000"
+    environment:
+      - PORT=${PORT:-8000}
+      - HOST=${HOST:-0.0.0.0}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - SERVE_DIRECTORY=${SERVE_DIRECTORY:-/data}
+    volumes:
+      - ./uploads:/data
+    healthcheck:
+      test: [ "CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')" ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 64M
