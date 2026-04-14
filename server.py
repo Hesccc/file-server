@@ -85,22 +85,8 @@ def setup_signal_handlers():
 
 def run_server(app, config):
     """运行服务器（支持优雅关闭）"""
-    import socket
-
-    # 创建 socket
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-
     host = config['host'] or '0.0.0.0'
     port = config['port']
-
-    try:
-        sock.bind((host, port))
-    except socket.error as e:
-        logger.error(f"绑定端口失败: {e}")
-        sys.exit(1)
-
-    sock.listen(5)
 
     logger.info(f"服务已启动: http://{host}:{port}/")
     logger.info("按 Ctrl+C 停止服务器")
@@ -108,11 +94,15 @@ def run_server(app, config):
     # 在单独的线程中运行服务器
     from werkzeug.serving import make_server
 
-    server = make_server(
-        host, port, app,
-        threaded=True,
-        processes=1
-    )
+    try:
+        server = make_server(
+            host, port, app,
+            threaded=True,
+            processes=1
+        )
+    except Exception as e:
+        logger.error(f"启动服务器失败: {e}")
+        sys.exit(1)
 
     # 启动服务器线程
     server_thread = threading.Thread(target=server.serve_forever)
